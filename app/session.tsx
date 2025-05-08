@@ -3,6 +3,8 @@ import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import * as Notifications from 'expo-notifications';
 
+import BackgroundTimer from 'react-native-background-timer';
+
 export default function SessionScreen() {
     const { total, work, rest, mode, cycles } = useLocalSearchParams();
 
@@ -17,7 +19,7 @@ export default function SessionScreen() {
     const [running, setRunning] = useState(true);
     const [cycleCount, setCycleCount] = useState(0);
 
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<number | null>(null);
     const phaseRef = useRef<'Work' | 'Rest'>(phase);
     const timeLeftRef = useRef(timeLeft);
     const elapsedRef = useRef(elapsed);
@@ -79,12 +81,12 @@ export default function SessionScreen() {
 
     const startTimer = () => {
         if (timerRef.current) return;
-
-        timerRef.current = setInterval(() => {
+    
+        timerRef.current = BackgroundTimer.setInterval(() => {
             const updatedElapsed = elapsedRef.current + 1;
             elapsedRef.current = updatedElapsed;
             setElapsed(updatedElapsed);
-
+    
             if (
                 (mode === 'duration' && updatedElapsed >= totalSeconds) ||
                 (mode === 'cycles' && cycleRef.current >= maxCycles)
@@ -94,9 +96,9 @@ export default function SessionScreen() {
                 router.back();
                 return;
             }
-
+    
             const currentTimeLeft = timeLeftRef.current;
-
+    
             if (currentTimeLeft <= 1) {
                 if (phaseRef.current === 'Work') {
                     setPhase('Rest');
@@ -107,13 +109,13 @@ export default function SessionScreen() {
                     const nextCycle = cycleRef.current + 1;
                     setCycleCount(nextCycle);
                     cycleRef.current = nextCycle;
-
+    
                     setPhase('Work');
                     phaseRef.current = 'Work';
                     setTimeLeft(workSeconds);
                     timeLeftRef.current = workSeconds;
                 }
-
+    
                 sendNotification(phaseRef.current === 'Work' ? 'Rest' : 'Work');
             } else {
                 const updatedTimeLeft = currentTimeLeft - 1;
@@ -125,7 +127,7 @@ export default function SessionScreen() {
 
     const stopTimer = () => {
         if (timerRef.current) {
-            clearInterval(timerRef.current);
+            BackgroundTimer.clearInterval(timerRef.current);
             timerRef.current = null;
         }
     };
@@ -177,7 +179,7 @@ export default function SessionScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f6fa',
+        backgroundColor: '#121212', // deep dark background
         justifyContent: 'center',
         alignItems: 'center',
         padding: 32,
@@ -186,22 +188,23 @@ const styles = StyleSheet.create({
         fontSize: 36,
         fontWeight: 'bold',
         marginBottom: 12,
+        color: '#f1f1f1', // light text for dark mode
     },
     workColor: {
-        color: '#d32f2f',
+        color: '#ff6b6b', // softer red for dark mode
     },
     restColor: {
-        color: '#388e3c',
+        color: '#81c784', // mint green for rest
     },
     timerText: {
         fontSize: 72,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#e0e0e0', // very light gray
         marginBottom: 8,
     },
     subText: {
         fontSize: 16,
-        color: '#777',
+        color: '#aaa', // medium gray for less emphasis
         marginBottom: 32,
     },
     buttonRow: {
@@ -209,14 +212,14 @@ const styles = StyleSheet.create({
         gap: 16,
     },
     button: {
-        backgroundColor: '#1976d2',
+        backgroundColor: '#1e88e5', // vibrant blue for main action
         paddingVertical: 12,
         paddingHorizontal: 28,
         borderRadius: 12,
         elevation: 3,
     },
     stopButton: {
-        backgroundColor: '#616161',
+        backgroundColor: '#424242', // dark gray for stop button
     },
     buttonPressed: {
         opacity: 0.8,

@@ -192,7 +192,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f4f8',
+    backgroundColor: '#121212',
     justifyContent: 'center',
     padding: 24,
   },
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     marginBottom: 28,
-    color: '#2d3436',
+    color: '#f1f1f1',
   },
 
   // Toggles
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 20,
-    backgroundColor: '#dfe6e9',
+    backgroundColor: '#333',
     elevation: 1,
   },
   activeTab: {
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 20,
-    backgroundColor: '#dfe6e9',
+    backgroundColor: '#333',
   },
   unitButtonActive: {
     backgroundColor: '#00b894',
@@ -249,34 +249,35 @@ const styles = StyleSheet.create({
 
   // Input blocks
   inputGroup: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1e1e1e',
     borderRadius: 12,
     padding: 14,
     marginBottom: 16,
     elevation: 1,
     shadowColor: '#000',
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
   },
   label: {
     fontSize: 15,
-    color: '#636e72',
+    color: '#b2bec3',
     marginBottom: 4,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#dfe6e9',
+    borderColor: '#555',
     borderRadius: 8,
     padding: 10,
     fontSize: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#2c2c2c',
+    color: '#f1f1f1',
   },
   errorInput: {
-    borderColor: '#d63031',
+    borderColor: '#e17055',
   },
   errorText: {
-    color: '#d63031',
+    color: '#e17055',
     fontSize: 13,
     marginTop: 4,
   },
@@ -289,13 +290,13 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     elevation: 4,
   },
   buttonDisabled: {
-    backgroundColor: '#b2bec3',
+    backgroundColor: '#636e72',
   },
   buttonPressed: {
     opacity: 0.85,
